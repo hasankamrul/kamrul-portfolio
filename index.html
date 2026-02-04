@@ -1,33 +1,231 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<title>Kamrul Hasan - iOS Developer</title>
-
-<style>
-body {
-  font-family: Arial;
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-}
-</style>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Md Kamrul Hasan — iOS Developer</title>
+  <meta name="description" content="Senior iOS Developer portfolio — iOS, Swift, WebRTC, MQTT, real-time apps." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <!-- ✅ 1) Edit ONLY this config -->
+  <script>
+    const config = {
+      name: "Md Kamrul Hasan",
+      subtitle: "Senior iOS Developer • Swift • Real-time Communication",
+      location: "Chemnitz, Germany",
+      openTo: "iOS roles (Germany / Remote)",
 
-<h1>Md Kamrul Hasan</h1>
-<h3>Senior iOS Developer</h3>
+      email: "kamrul1992.cse@gmail.com",
+      linkedin: "https://www.linkedin.com/in/kamrul-hasan-cse/",
+      github: "https://github.com/hasankamrul",
 
-<p>
-6+ years experience in:
-- iOS Development  
-- Swift / UIKit / SwiftUI  
-- WebRTC, Socket, MQTT  
-</p>
+      skills: ["Swift", "UIKit", "SwiftUI", "WebRTC", "Socket.IO", "MQTT", "REST APIs"],
 
-<p>Email: kamrul1992.cse@gmail.com</p>
-<p>Location: Germany</p>
+      projects: [
+        {
+          title: "Real-time Chat & Calling App",
+          tech: "Swift • WebRTC • Socket • Push • CallKit",
+          description: "Built 1:1 calling, reconnect logic, call state handling, and a smooth UX for unreliable networks.",
+          github: "https://github.com/YOUR_GITHUB",
+          linkLabel: "App Store",
+          linkUrl: "#"
+        },
+        {
+          title: "IoT Monitoring Dashboard",
+          tech: "Swift • MQTT • Charts • Offline mode",
+          description: "Live device metrics with MQTT subscriptions, caching for offline use, and performance tuning.",
+          github: "https://github.com/YOUR_GITHUB",
+          linkLabel: "Case study",
+          linkUrl: "#"
+        },
+        {
+          title: "Fintech UI + API Integration",
+          tech: "UIKit/SwiftUI • REST • Security",
+          description: "Implemented secure API flows, error handling, and reusable UI components with clean architecture.",
+          github: "https://github.com/YOUR_GITHUB",
+          linkLabel: "Details",
+          linkUrl: "#"
+        }
+      ],
 
+      highlights: [
+        "6+ years building iOS apps with Swift, UIKit, and SwiftUI.",
+        "Real-time systems: Socket, MQTT, and WebRTC audio/video calling.",
+        "Clean architecture, performance tuning, and complex UI delivery."
+      ]
+    };
+  </script>
+
+  <header class="container header">
+    <div>
+      <p class="eyebrow">Portfolio</p>
+      <h1 id="name"></h1>
+      <p class="subtitle" id="subtitle"></p>
+
+      <div class="cta">
+        <a class="button" href="#projects">View projects</a>
+        <a class="button ghost" id="emailBtn">Email me</a>
+      </div>
+
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="card profile">
+      <div class="avatar" aria-hidden="true" id="avatar">KH</div>
+      <div>
+        <p class="muted">Based in</p>
+        <p><strong id="location"></strong></p>
+        <p class="muted">Open to</p>
+        <p><strong id="openTo"></strong></p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="about" class="section">
+      <h2>About</h2>
+      <p>
+        I’m an iOS developer with 6+ years of experience building production apps with complex UI, real-time features,
+        and scalable API integrations. I’ve worked on video/audio calling (WebRTC), socket-based systems, MQTT, and
+        performance-focused mobile architecture.
+      </p>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <p class="muted">Edit the projects array in config to update everything.</p>
+      </div>
+
+      <div class="grid" id="projectsGrid"></div>
+    </section>
+
+    <section id="experience" class="section">
+      <h2>Highlights</h2>
+      <ul class="bullets" id="highlights"></ul>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="contact card">
+        <p>Want to talk about an iOS role or a project?</p>
+        <div class="cta">
+          <a class="button" id="emailLink"></a>
+          <a class="button ghost" id="linkedinLink" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="button ghost" id="githubLink" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <p class="muted small">Tip: replace placeholders in the config, then deploy with GitHub Pages.</p>
+      </div>
+    </section>
+
+    <footer class="footer muted">
+      <p>© <span id="year"></span> <span id="footerName"></span> • Built with HTML + CSS</p>
+    </footer>
+  </main>
+
+  <script>
+    // --- helpers ---
+    const $ = (id) => document.getElementById(id);
+
+    const initialsFromName = (name) => {
+      const parts = String(name || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+      if (parts.length === 0) return "ME";
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    };
+
+    const safeUrl = (url) => {
+      // Allow http(s), mailto, or # only
+      const u = String(url || "").trim();
+      if (u === "#" || u.startsWith("mailto:")) return u;
+      if (u.startsWith("https://") || u.startsWith("http://")) return u;
+      return "#";
+    };
+
+    // --- inject header info ---
+    $("name").textContent = config.name;
+    $("subtitle").textContent = config.subtitle;
+    $("location").textContent = config.location;
+    $("openTo").textContent = config.openTo;
+
+    $("avatar").textContent = initialsFromName(config.name);
+
+    // email button (top)
+    $("emailBtn").href = "mailto:" + config.email;
+
+    // chips
+    $("chips").innerHTML = "";
+    config.skills.forEach((skill) => {
+      const chip = document.createElement("span");
+      chip.textContent = skill;
+      $("chips").appendChild(chip);
+    });
+
+    // projects render
+    $("projectsGrid").innerHTML = "";
+    config.projects.forEach((p) => {
+      const card = document.createElement("article");
+      card.className = "project card";
+
+      const title = document.createElement("h3");
+      title.textContent = p.title;
+
+      const tech = document.createElement("p");
+      tech.className = "muted";
+      tech.textContent = p.tech;
+
+      const desc = document.createElement("p");
+      desc.textContent = p.description;
+
+      const links = document.createElement("div");
+      links.className = "links";
+
+      const gh = document.createElement("a");
+      gh.href = safeUrl(p.github);
+      gh.target = "_blank";
+      gh.rel = "noreferrer";
+      gh.textContent = "GitHub";
+
+      const extra = document.createElement("a");
+      extra.href = safeUrl(p.linkUrl);
+      extra.target = "_blank";
+      extra.rel = "noreferrer";
+      extra.textContent = p.linkLabel || "Link";
+
+      links.appendChild(gh);
+      links.appendChild(extra);
+
+      card.appendChild(title);
+      card.appendChild(tech);
+      card.appendChild(desc);
+      card.appendChild(links);
+
+      $("projectsGrid").appendChild(card);
+    });
+
+    // highlights render
+    $("highlights").innerHTML = "";
+    config.highlights.forEach((h) => {
+      const li = document.createElement("li");
+      li.textContent = h;
+      $("highlights").appendChild(li);
+    });
+
+    // contact links
+    $("emailLink").href = "mailto:" + config.email;
+    $("emailLink").textContent = config.email;
+
+    $("linkedinLink").href = safeUrl(config.linkedin);
+    $("githubLink").href = safeUrl(config.github);
+
+    // footer
+    $("year").textContent = new Date().getFullYear();
+    $("footerName").textContent = config.name;
+  </script>
 </body>
 </html>
